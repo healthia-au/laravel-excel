@@ -165,9 +165,6 @@ class BatchCacheTest extends TestCase
         ], $cache->getMultiple(['A1', 'A2', 'A3', 'A4', 'A5']));
     }
 
-    /**
-     * @dataProvider defaultTTLDataProvider
-     */
     #[DataProvider('defaultTTLDataProvider')]
     public function test_it_writes_to_cache_with_default_ttl($defaultTTL, $receivedAs)
     {
@@ -243,7 +240,7 @@ class BatchCacheTest extends TestCase
      * @param  int|null  $memoryLimit
      * @return CacheInterface
      */
-    private function givenCache(array $memory = [], array $persisted = [], $memoryLimit = null): CacheInterface
+    private function givenCache(array $memory = [], array $persisted = [], ?int $memoryLimit = null): CacheInterface
     {
         config()->set('excel.cache.batch.memory_limit', $memoryLimit ?: 60000);
 

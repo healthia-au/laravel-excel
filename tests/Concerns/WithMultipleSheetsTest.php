@@ -16,16 +16,6 @@ use PHPUnit\Framework\Assert;
 
 class WithMultipleSheetsTest extends TestCase
 {
-    /**
-     * Setup the test environment.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->withFactories(__DIR__ . '/../Data/Stubs/Database/Factories');
-    }
-
     public function test_can_export_with_multiple_sheets_using_collections()
     {
         $export = new class implements WithMultipleSheets
@@ -54,8 +44,9 @@ class WithMultipleSheetsTest extends TestCase
 
     public function test_can_export_multiple_sheets_from_view()
     {
+        $this->loadLaravelMigrations(['--database' => 'testing']);
         /** @var Collection|User[] $users */
-        $users = factory(User::class)->times(300)->make();
+        $users = User::factory()->count(300)->create();
 
         $export = new class($users) implements WithMultipleSheets
         {
