@@ -2,11 +2,11 @@
 
 namespace Maatwebsite\Excel\Tests\Data\Stubs;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\ShouldBatch;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class ShouldQueueExport implements ShouldQueue, WithMultipleSheets
+class ShouldBatchExport implements ShouldBatch, WithMultipleSheets
 {
     use Exportable;
 

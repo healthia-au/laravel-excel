@@ -2,6 +2,7 @@
 
 namespace Maatwebsite\Excel\Jobs;
 
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,7 +17,7 @@ use Maatwebsite\Excel\Writer;
 
 class AppendQueryToSheet implements ShouldQueue
 {
-    use Queueable, Dispatchable, ProxyFailures, InteractsWithQueue, HasEventBus;
+    use Batchable, Dispatchable, HasEventBus, InteractsWithQueue, ProxyFailures, Queueable;
 
     /**
      * @var TemporaryFile
@@ -90,6 +91,11 @@ class AppendQueryToSheet implements ShouldQueue
      */
     public function handle(Writer $writer)
     {
+        // Determine if the batch has been cancelled...
+        if ($this->batch()?->cancelled()) {
+            return;
+        }
+
         (new LocalizeJob($this->sheetExport))->handle($this, function () use ($writer) {
             if ($this->sheetExport instanceof WithEvents) {
                 $this->registerListeners($this->sheetExport->registerEvents());
