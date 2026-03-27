@@ -1,6 +1,6 @@
 {
-  "name": "maatwebsite/excel",
-  "description": "Supercharged Excel exports and imports in Laravel",
+  "name": "healthia-au/maatwebsite-excel",
+  "description": "Supercharged Excel exports and imports in Laravel. Fork of maatwebsite/excel.",
   "license": "MIT",
   "keywords": [
     "laravel",
